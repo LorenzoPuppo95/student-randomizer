@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs'); //comment this for browser version
 
 function betterSplice(array, index = 0, removals = 1) {
     const newArray = [...array];
