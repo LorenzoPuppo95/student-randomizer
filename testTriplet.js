@@ -30,22 +30,24 @@ function createStudentCouples(studentsArray) {
         // Seleziona un indice casuale nell'array di studenti
         let index = 0;
         do {
+            // Genera un indice casuale finché non trova uno studente il cui nome non sia "Andrea"
             index = randomArrayIndex(studentsArray);     
-        } while (studentsArray[index].name==="Andrea");       
+        } while (studentsArray[index].name === "Andrea");   
         // Crea una coppia vuota
-        let couple = [];    
+        let couple = [];      
         // Aggiungi il nome del primo studente alla coppia
-        couple.push(studentsArray[index].name);
+        couple.push(studentsArray[index].name);  
         // Rimuovi il primo studente dall'array
-        studentsArray = betterSplice(studentsArray, index, 1);       
-        // Selezioniamo un altro indice casuale per il secondo studente    
+        studentsArray = betterSplice(studentsArray, index, 1);          
+        // Seleziona un altro indice casuale per il secondo studente
         do {
+            // Genera un indice casuale finché non trova uno studente il cui nome non sia "Andrea"
             index = randomArrayIndex(studentsArray);     
-        } while (studentsArray[index].name==="Andrea"); 
-        // Aggiungiamo il nome del secondo studente alla coppia
+        } while (studentsArray[index].name === "Andrea"); 
+        // Aggiungi il nome del secondo studente alla coppia
         couple.push(studentsArray[index].name);
-        // Rimuoviamo il secondo studente dall'array
-        studentsArray = betterSplice(studentsArray, index, 1);
+        // Rimuovi il secondo studente dall'array
+        studentsArray = betterSplice(studentsArray, index, 1);    
         // Aggiungi la coppia all'array delle coppie
         arrayCouples.push(couple);
     }
