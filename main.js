@@ -40,10 +40,19 @@ function getStudentsFromJsonFile(filePath) {
     return JSON.parse(stringJSON);
 }
 
+// browser version
+// async function getStudentsFromJsonFile(filePath) {
+//     const response = await fetch(filePath);
+//     const data = await response.json();
+//     return data;
+// }
+
 //student randomizer
+// async function main() { //browser version
 function main() {
     // //0:recupera le informazioni degli studenti dal file students.json
     const allStudents = getStudentsFromJsonFile("students.json");
+    // const allStudents = await getStudentsFromJsonFile("students.json"); //browser version
     console.log(allStudents);
     //1: dall'array di studenti estrai un array di coppie di studenti
     const studentCouples = createStudentCouples(allStudents);
