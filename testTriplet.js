@@ -16,7 +16,7 @@ function betterSplice(array, index = 0, removals = 1) {
 function randomArrayIndex(array) {
     // `Math.random()` restituisce un numero casuale tra 0 (incluso) e 1 (escluso)
     // Moltiplichiamo per `array.length - 1` per ottenere un valore tra 0 e `array.length - 1`
-    const randomIndex = Math.round(Math.random() * (array.length - 1));
+    const randomIndex = Math.floor(Math.random() * array.length);
     // Restituisce l'indice casuale generato
     return randomIndex;
 }
@@ -28,15 +28,20 @@ function createStudentCouples(studentsArray) {
     // Continua finché ci sono studenti nell'array
     while (studentsArray.length > 1) {
         // Seleziona un indice casuale nell'array di studenti
-        let index = randomArrayIndex(studentsArray);
+        let index = 0;
+        do {
+            index = randomArrayIndex(studentsArray);     
+        } while (studentsArray[index].name==="Andrea");       
         // Crea una coppia vuota
-        let couple = [];      
+        let couple = [];    
         // Aggiungi il nome del primo studente alla coppia
         couple.push(studentsArray[index].name);
         // Rimuovi il primo studente dall'array
         studentsArray = betterSplice(studentsArray, index, 1);       
-        // Selezioniamo un altro indice casuale per il secondo studente
-        index = randomArrayIndex(studentsArray);
+        // Selezioniamo un altro indice casuale per il secondo studente    
+        do {
+            index = randomArrayIndex(studentsArray);     
+        } while (studentsArray[index].name==="Andrea"); 
         // Aggiungiamo il nome del secondo studente alla coppia
         couple.push(studentsArray[index].name);
         // Rimuoviamo il secondo studente dall'array
