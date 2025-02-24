@@ -26,7 +26,7 @@ function createStudentCouples(studentsArray) {
     // Crea un array vuoto che conterrà le coppie di studenti
     const arrayCouples = [];   
     // Continua finché ci sono studenti nell'array
-    while (studentsArray.length > 0) {
+    while (studentsArray.length > 1) {
         // Seleziona un indice casuale nell'array di studenti
         let index = randomArrayIndex(studentsArray);
         // Crea una coppia vuota
@@ -35,17 +35,18 @@ function createStudentCouples(studentsArray) {
         couple.push(studentsArray[index].name);
         // Rimuovi il primo studente dall'array
         studentsArray = betterSplice(studentsArray, index, 1);       
-        // Se ci sono ancora studenti nell'array, selezioniamo il secondo studente
-        if (studentsArray.length > 0) {
-            // Selezioniamo un altro indice casuale per il secondo studente
-            index = randomArrayIndex(studentsArray);
-            // Aggiungiamo il nome del secondo studente alla coppia
-            couple.push(studentsArray[index].name);
-            // Rimuoviamo il secondo studente dall'array
-            studentsArray = betterSplice(studentsArray, index, 1);
-        }
+        // Selezioniamo un altro indice casuale per il secondo studente
+        index = randomArrayIndex(studentsArray);
+        // Aggiungiamo il nome del secondo studente alla coppia
+        couple.push(studentsArray[index].name);
+        // Rimuoviamo il secondo studente dall'array
+        studentsArray = betterSplice(studentsArray, index, 1);
         // Aggiungi la coppia all'array delle coppie
         arrayCouples.push(couple);
+    }
+    // Se c'è un singolo studente rimanente, aggiungilo all'ultima coppia come terzo membro
+    if (studentsArray.length === 1) {
+        arrayCouples[arrayCouples.length - 1].push(studentsArray[0].name);
     } 
     // Restituisce l'array contenente tutte le coppie di studenti
     return arrayCouples;
@@ -58,9 +59,8 @@ function printStudentCouples(studentCouples) {
     // Cicla attraverso l'array delle coppie di studenti
     for (let i = 0; i < studentCouples.length; i++) {
         // Ottiene la coppia corrente (un array con i nomi degli studenti)
-        const couple = studentCouples[i];   
-        // Aggiunge alla stringa `studentCouplesString` la coppia con il formato: "indice) nome1 - nome2"
-        studentCouplesString += `${i+1}) ${couple[0]} - ${couple[1]} \n`;
+        const couple = studentCouples[i]; 
+        studentCouplesString += `${(couple.length===3) ? `${i+1}) ${couple[0]} - ${couple[1]} - ${couple[2]} \n` : `${i+1}) ${couple[0]} - ${couple[1]} \n`}`;  
     }    
     // Restituisce la stringa contenente tutte le coppie formattate
     return studentCouplesString;
@@ -85,7 +85,7 @@ function getStudentsFromJsonFile(filePath) {
 // async function main() { //browser version
 function main() {
     // //0:recupera le informazioni degli studenti dal file students.json
-    const allStudents = getStudentsFromJsonFile("students.json");
+    const allStudents = getStudentsFromJsonFile("studentsTriplet.json");
     // const allStudents = await getStudentsFromJsonFile("students.json"); //browser version
     console.log(allStudents);
     //1: dall'array di studenti estrai un array di coppie di studenti
