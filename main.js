@@ -23,26 +23,28 @@ function randomArrayIndex(array) {
 
 // Funzione che crea coppie casuali di studenti
 function createStudentCouples(studentsArray) {
+    // Crea una copia dell'array originale degli studenti per evitare di modificarlo direttamente
+    let cloneArray = [...studentsArray];
     // Crea un array vuoto che conterrà le coppie di studenti
     const arrayCouples = [];   
     // Continua finché ci sono studenti nell'array
-    while (studentsArray.length > 0) {
+    while (cloneArray.length > 0) {      
         // Seleziona un indice casuale nell'array di studenti
-        let index = randomArrayIndex(studentsArray);
+        let index = randomArrayIndex(cloneArray);
         // Crea una coppia vuota
-        let couple = [];      
+        const couple = [];      
         // Aggiungi il nome del primo studente alla coppia
-        couple.push(studentsArray[index].name);
+        couple.push(cloneArray[index].name);
         // Rimuovi il primo studente dall'array
-        studentsArray = betterSplice(studentsArray, index, 1);       
+        cloneArray = betterSplice(cloneArray, index, 1);       
         // Se ci sono ancora studenti nell'array, selezioniamo il secondo studente
-        if (studentsArray.length > 0) {
+        if (cloneArray.length > 0) {
             // Selezioniamo un altro indice casuale per il secondo studente
-            index = randomArrayIndex(studentsArray);
+            index = randomArrayIndex(cloneArray);
             // Aggiungiamo il nome del secondo studente alla coppia
-            couple.push(studentsArray[index].name);
+            couple.push(cloneArray[index].name);
             // Rimuoviamo il secondo studente dall'array
-            studentsArray = betterSplice(studentsArray, index, 1);
+            cloneArray = betterSplice(cloneArray, index, 1);
         }
         // Aggiungi la coppia all'array delle coppie
         arrayCouples.push(couple);
@@ -68,10 +70,15 @@ function printStudentCouples(studentCouples) {
 
 // Funzione che legge un file JSON e restituisce i dati degli studenti
 function getStudentsFromJsonFile(filePath) {
-    // Legge il contenuto del file specificato dal percorso `filePath` come stringa (in formato UTF-8)
-    const stringJSON = fs.readFileSync(filePath, 'utf8');   
-    // Converte la stringa JSON letta dal file in un oggetto JavaScript e lo restituisce
-    return JSON.parse(stringJSON);
+    try {
+        // Legge il contenuto del file specificato dal percorso `filePath` come stringa (in formato UTF-8)
+        const stringJSON = fs.readFileSync("./" + filePath, 'utf8');      
+        // Converte la stringa JSON letta dal file in un oggetto JavaScript e lo restituisce
+        return JSON.parse(stringJSON);
+    } catch (error) {
+        // Stampa un messaggio di errore in caso di problemi nella lettura del file
+        console.error(`Error reading file ./${filePath}:`, error);
+    }     
 }
 
 // browser version
@@ -87,7 +94,7 @@ function main() {
     // //0:recupera le informazioni degli studenti dal file students.json
     const allStudents = getStudentsFromJsonFile("students.json");
     // const allStudents = await getStudentsFromJsonFile("students.json"); //browser version
-    console.log(allStudents);
+    // console.log(allStudents);
     //1: dall'array di studenti estrai un array di coppie di studenti
     const studentCouples = createStudentCouples(allStudents);
     console.log(studentCouples);
